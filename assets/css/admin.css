@@ -1,15 +1,15 @@
 .admin-container {
             max-width: 1440px;
-            margin: 5px auto;
-            padding: 10px 4%;
+            margin: 0 auto;
+            padding: 5px 4%;
         }
         .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 20px;
+            padding-bottom: 12px;
         }
         .admin-grid {
             display: grid;
@@ -192,12 +192,14 @@
             width: 100vw;
             height: 100vh;
             background: var(--bg-primary);
-            display: flex;
+            display: none; /* Hidden by default to prevent refresh flash */
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
         }
         .lock-card {
             width: 100%;
@@ -245,4 +247,48 @@
         .back-home-link:hover::after {
             transform: scaleX(1);
             transform-origin: bottom left;
+        }
+        /* Premium Floating Scroll Helper Dock */
+        .scroll-helper-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            gap: 2px;
+        }
+        .scroll-helper-btn .icon {
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: transform 0.25s ease;
+        }
+        .scroll-helper-btn .label {
+            font-size: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .scroll-helper-btn:hover {
+            color: var(--accent-primary) !important;
+            background: rgba(16, 185, 129, 0.08);
+        }
+        .scroll-helper-btn:hover .icon {
+            transform: scale(1.2);
+        }
+        #btn-scroll-top:hover .icon {
+            transform: translateY(-2px) scale(1.2);
+        }
+        #btn-scroll-last:hover .icon {
+            transform: translateY(2px) scale(1.2);
+        }
+        
+        @keyframes btn-loading-spin {
+            to { transform: rotate(360deg); }
         }

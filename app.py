@@ -39,6 +39,13 @@ def init_db():
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS unique_visitors (
+            ip_hash TEXT PRIMARY KEY,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
     
     # Check if empty, populate with default settings
     cursor.execute('SELECT COUNT(*) FROM portfolio_settings')
@@ -254,6 +261,37 @@ def delete_message(msg_id):
     conn.commit()
     conn.close()
     return jsonify({"success": True, "message": "Message deleted successfully"})
+
+@app.route('/api/visit', methods=['POST'])
+def log_visit():
+    import hashlib
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1')
+    ip_hash = hashlib.sha256(ip.encode('utf-8')).hexdigest()
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    try:
+        cursor.execute('INSERT OR IGNORE INTO unique_visitors (ip_hash) VALUES (?)', (ip_hash,))
+        conn.commit()
+    except Exception as e:
+        print("Visitor log error:", e)
+    conn.close()
+    return jsonify({"success": True})
+
+@app.route('/api/stats', methods=['GET'])
+def get_stats():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*) FROM unique_visitors')
+    visitors_count = cursor.fetchone()[0]
+    cursor.execute('SELECT COUNT(*) FROM contact_messages')
+    messages_count = cursor.fetchone()[0]
+    conn.close()
+    return jsonify({
+        "unique_visitors": visitors_count,
+        "total_messages": messages_count
+    })
+
 
 # Static File Routes
 @app.route('/')

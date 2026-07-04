@@ -13,14 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initScrollReveal();
     initAdminLockState();
+    initVisitorLogger();
 });
+
+// Log unique visitor counts to database
+function initVisitorLogger() {
+    fetch('http://127.0.0.1:5000/api/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.log("Visitor logging skipped locally:", err));
+}
+
 
 // Check admin auth token and update lock icon state
 function initAdminLockState() {
     const AUTH_KEY = 'admin-auth-token';
     const AUTH_EXPIRY = 24 * 60 * 60 * 1000;
 
-    const svgLocked   = document.querySelector('.svg-locked');
+    const svgLocked = document.querySelector('.svg-locked');
     const svgUnlocked = document.querySelector('.svg-unlocked');
     if (!svgLocked || !svgUnlocked) return;
 
@@ -34,11 +44,11 @@ function initAdminLockState() {
     } catch { isLoggedIn = false; }
 
     if (isLoggedIn) {
-        svgLocked.style.display   = 'none';
+        svgLocked.style.display = 'none';
         svgUnlocked.style.display = 'block';
         svgUnlocked.style.position = 'static';
     } else {
-        svgLocked.style.display   = 'block';
+        svgLocked.style.display = 'block';
         svgUnlocked.style.display = 'none';
     }
 }
@@ -342,22 +352,22 @@ function initDynamicContent() {
                         .join('');
                 }
 
-                 // Parse images list
-                 let images = [];
-                 if (p.image && p.image.includes(',')) {
-                     images = p.image.split(',');
-                 } else {
-                     images = p.image ? [p.image] : ['assets/images/project1.png?v=original'];
-                 }
+                // Parse images list
+                let images = [];
+                if (p.image && p.image.includes(',')) {
+                    images = p.image.split(',');
+                } else {
+                    images = p.image ? [p.image] : ['assets/images/project1.png?v=original'];
+                }
 
-                 let imageBoxHTML = '';
-                 if (images.length > 1) {
-                     // Create hover-slider track with all images side-by-side
-                     const trackImagesHTML = images.map(imgSrc => `<img src="${imgSrc}" alt="${p.title}" class="project-image">`).join('');
-                     const segmentsHTML = images.map((_, idx) => `<div class="hover-segment" data-index="${idx}"></div>`).join('');
-                     const dotsHTML = images.map((_, idx) => `<div class="slider-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}"></div>`).join('');
-                     
-                     imageBoxHTML = `
+                let imageBoxHTML = '';
+                if (images.length > 1) {
+                    // Create hover-slider track with all images side-by-side
+                    const trackImagesHTML = images.map(imgSrc => `<img src="${imgSrc}" alt="${p.title}" class="project-image">`).join('');
+                    const segmentsHTML = images.map((_, idx) => `<div class="hover-segment" data-index="${idx}"></div>`).join('');
+                    const dotsHTML = images.map((_, idx) => `<div class="slider-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}"></div>`).join('');
+
+                    imageBoxHTML = `
                          <div class="hover-slider-container">
                              <div class="hover-slider-track" id="slider-track-${p.id}">
                                  ${trackImagesHTML}
@@ -366,11 +376,11 @@ function initDynamicContent() {
                              <div class="slider-indicators">${dotsHTML}</div>
                          </div>
                      `;
-                 } else {
-                     imageBoxHTML = `<img src="${images[0]}" alt="${p.title}" class="project-image">`;
-                 }
+                } else {
+                    imageBoxHTML = `<img src="${images[0]}" alt="${p.title}" class="project-image">`;
+                }
 
-                 art.innerHTML = `
+                art.innerHTML = `
                       <div class="project-image-box">
                           ${imageBoxHTML}
                           <span class="project-badge">${p.category.toUpperCase()} Project</span>
@@ -393,40 +403,40 @@ function initDynamicContent() {
                          </div>
                      </div>
                  `;
-                 projectsGrid.appendChild(art);
+                projectsGrid.appendChild(art);
 
-                 // Attach hover slider interactive listeners
-                 if (images.length > 1) {
-                     const sliderTrack = art.querySelector(`#slider-track-${p.id}`);
-                     const segments = art.querySelectorAll('.hover-segment');
-                     const dots = art.querySelectorAll('.slider-dot');
+                // Attach hover slider interactive listeners
+                if (images.length > 1) {
+                    const sliderTrack = art.querySelector(`#slider-track-${p.id}`);
+                    const segments = art.querySelectorAll('.hover-segment');
+                    const dots = art.querySelectorAll('.slider-dot');
 
-                     segments.forEach(seg => {
-                         seg.addEventListener('mouseenter', (e) => {
-                             const idx = parseInt(e.target.getAttribute('data-index'));
-                             sliderTrack.style.transform = `translateX(-${idx * 100}%)`;
-                             dots.forEach(d => {
-                                 if (parseInt(d.getAttribute('data-index')) === idx) {
-                                     d.classList.add('active');
-                                 } else {
-                                     d.classList.remove('active');
-                                 }
-                             });
-                         });
-                     });
+                    segments.forEach(seg => {
+                        seg.addEventListener('mouseenter', (e) => {
+                            const idx = parseInt(e.target.getAttribute('data-index'));
+                            sliderTrack.style.transform = `translateX(-${idx * 100}%)`;
+                            dots.forEach(d => {
+                                if (parseInt(d.getAttribute('data-index')) === idx) {
+                                    d.classList.add('active');
+                                } else {
+                                    d.classList.remove('active');
+                                }
+                            });
+                        });
+                    });
 
-                     // Reset to first image on mouse leave
-                     const container = art.querySelector('.hover-slider-container');
-                     container.addEventListener('mouseleave', () => {
-                         sliderTrack.style.transform = 'translateX(0%)';
-                         dots.forEach((d, idx) => {
-                             if (idx === 0) d.classList.add('active');
-                             else d.classList.remove('active');
-                         });
-                     });
-                 }
-             });
-         }
+                    // Reset to first image on mouse leave
+                    const container = art.querySelector('.hover-slider-container');
+                    container.addEventListener('mouseleave', () => {
+                        sliderTrack.style.transform = 'translateX(0%)';
+                        dots.forEach((d, idx) => {
+                            if (idx === 0) d.classList.add('active');
+                            else d.classList.remove('active');
+                        });
+                    });
+                }
+            });
+        }
 
         // Render Certifications dynamically
         const certsGrid = document.getElementById('certs-grid');
@@ -488,7 +498,70 @@ function initDynamicContent() {
             });
         }
 
-        // Re-initialize projects filters and scroll reveal for dynamic content
+        // Render Skills dynamically
+        const skillsGrid = document.getElementById('skills-grid');
+        if (skillsGrid && portfolioData.skills) {
+            skillsGrid.innerHTML = '';
+            portfolioData.skills.forEach(s => {
+                // Map class for devicon classes
+                let deviconClass = 'devicon-javascript-plain colored';
+                const nameLower = s.name.toLowerCase();
+
+                if (nameLower.includes('html')) {
+                    deviconClass = 'devicon-html5-plain-wordmark colored';
+                } else if (nameLower.includes('css')) {
+                    deviconClass = 'devicon-css3-plain-wordmark colored';
+                } else if (nameLower.includes('react') || nameLower.includes('next')) {
+                    deviconClass = 'devicon-react-original-wordmark colored';
+                } else if (nameLower.includes('node') || nameLower.includes('express')) {
+                    deviconClass = 'devicon-nodejs-plain-wordmark colored';
+                } else if (nameLower.includes('javascript') || nameLower.includes('js')) {
+                    deviconClass = 'devicon-javascript-plain colored';
+                } else if (nameLower.includes('python') || nameLower.includes('fastapi')) {
+                    deviconClass = 'devicon-python-plain colored';
+                } else if (nameLower.includes('mongo')) {
+                    deviconClass = 'devicon-mongodb-plain-wordmark colored';
+                } else if (nameLower.includes('sql') || nameLower.includes('postgres')) {
+                    deviconClass = 'devicon-postgresql-plain-wordmark colored';
+                } else if (nameLower.includes('git') || nameLower.includes('github')) {
+                    deviconClass = 'devicon-github-original-wordmark colored';
+                } else if (nameLower.includes('docker')) {
+                    deviconClass = 'devicon-docker-plain-wordmark colored';
+                } else if (nameLower.includes('aws')) {
+                    deviconClass = 'devicon-amazonwebservices-plain-wordmark colored';
+                } else if (nameLower.includes('gemini') || nameLower.includes('openai') || nameLower.includes('ai') || nameLower.includes('api')) {
+                    deviconClass = 'devicon-google-plain colored'; // Fallback to Google / general devicon
+                } else {
+                    deviconClass = 'devicon-code-plain colored';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'skill-card glass-panel reveal';
+                card.setAttribute('data-skill-type', s.category);
+                card.innerHTML = `
+                    <div class="skill-info">
+                        <div class="skill-icon" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; font-size: 2.2rem; background: transparent; border: none; border-radius: 0;">
+                            ${nameLower.includes('python') ?
+                        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 16 32 32" style="width: 1em; height: 1em;">
+                                  <path fill="#3776AB" d="M31.885 16c-8.124 0-7.617 3.523-7.617 3.523l.01 3.65h7.752v1.095H21.197S16 23.678 16 31.876c0 8.196 4.537 7.906 4.537 7.906h2.708v-3.804s-.146-4.537 4.465-4.537h7.688s4.32.07 4.32-4.175v-7.019S40.374 16 31.885 16zm-4.275 2.454a1.394 1.394 0 1 1 0 2.79 1.393 1.393 0 0 1-1.395-1.395c0-.771.624-1.395 1.395-1.395z"/>
+                                  <path fill="#FFD43B" d="M32.115 47.833c8.124 0 7.617-3.523 7.617-3.523l-.01-3.65H31.97v-1.095h10.832S48 40.155 48 31.958c0-8.197-4.537-7.906-4.537-7.906h-2.708v3.803s.146 4.537-4.465 4.537h-7.688s-4.32-.07-4.32 4.175v7.019s-.656 4.247 7.833 4.247zm4.275-2.454a1.393 1.393 0 0 1-1.395-1.395 1.394 1.394 0 1 1 1.395 1.395z"/>
+                              </svg>` :
+                        `<i class="${deviconClass}" style="line-height: 1;"></i>`
+                    }
+                        </div>
+                        <div class="skill-name">${s.name}</div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" data-val="${s.percent}" style="width: 0%;"></div>
+                    </div>
+                    <span class="skill-percent">${s.percent}%</span>
+                `;
+                skillsGrid.appendChild(card);
+            });
+        }
+
+        // Re-initialize filters and reveal managers for dynamic lists
+        initSkillsFilter();
         initProjectsFilter();
         initScrollReveal();
 
@@ -545,7 +618,7 @@ function initDynamicContent() {
                     // Final fallback: localStorage or hardcoded defaults
                     const stored = localStorage.getItem('AryanJoshiPortfolioData');
                     if (stored) {
-                        try { portfolioData = JSON.parse(stored); } catch(e) {}
+                        try { portfolioData = JSON.parse(stored); } catch (e) { }
                     }
                     applyData();
                 });
@@ -648,8 +721,10 @@ function initTypingEffect() {
     let charIndex = 0;
     let isDeleting = false;
     let typingSpeed = 100;
+    let timeoutId = null;
 
     function type() {
+        if (!typingSpan) return;
         const currentRole = roles[roleIndex];
 
         if (isDeleting) {
@@ -671,7 +746,7 @@ function initTypingEffect() {
             typingSpeed = 500; // Pause before typing next word
         }
 
-        setTimeout(type, typingSpeed);
+        timeoutId = setTimeout(type, typingSpeed);
     }
 
     type();
@@ -680,14 +755,26 @@ function initTypingEffect() {
 /* Skills section category tabs & progress bar triggers */
 function initSkillsFilter() {
     const tabs = document.querySelectorAll('.skill-tab');
-    const cards = document.querySelectorAll('.skill-card');
+
+    // Animate progress bars on load
+    const initialCards = document.querySelectorAll('.skill-card');
+    initialCards.forEach(card => {
+        animateProgressBar(card.querySelector('.progress-bar'));
+    });
 
     tabs.forEach(tab => {
+        // Prevent duplicate listener accumulation
+        tab.replaceWith(tab.cloneNode(true));
+    });
+
+    const freshTabs = document.querySelectorAll('.skill-tab');
+    freshTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
+            freshTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
             const category = tab.getAttribute('data-skill-cat');
+            const cards = document.querySelectorAll('.skill-card');
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-skill-type') === category) {
                     card.style.display = 'block';
@@ -899,8 +986,8 @@ function initScrollReveal() {
                     animateProgressBar(entry.target.querySelector('.progress-bar'));
                 }
 
-                // Keep observing once triggered, or unobserve if we only want it once
-                // observer.unobserve(entry.target);
+                // Stop observing once animated into view to avoid scroll reflow jumps
+                observer.unobserve(entry.target);
             }
         });
     }, {
@@ -982,8 +1069,8 @@ function initCostEstimator() {
             }
         }
 
-        // Animate value label
-        if (pagesVal) {
+        // Animate value label (only when user actively slides, checking active element)
+        if (pagesVal && document.activeElement === pagesRange) {
             pagesVal.style.transform = 'scale(1.15)';
             setTimeout(() => { pagesVal.style.transform = 'scale(1)'; }, 150);
         }

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- SEO Optimization -->
     <title>Modern Developer Portfolio | Full Stack & AI Engineer</title>
@@ -23,6 +23,8 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/css/index.css?v=blue_contrib">
+    <!-- Devicon library for colored tech stack icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 </head>
 
 <body>
@@ -182,132 +184,8 @@
             <button class="skill-tab" data-skill-cat="tools">Tools</button>
             <button class="skill-tab" data-skill-cat="ai">AI & APIs</button>
         </div>
-        <div class="skills-grid">
-            <!-- Frontend -->
-            <div class="skill-card glass-panel reveal" data-skill-type="frontend">
-                <div class="skill-info">
-                    <div class="skill-icon">HTML</div>
-                    <div class="skill-name">HTML5 / Semantic UI</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="95"></div>
-                </div>
-                <span class="skill-percent">95%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="frontend">
-                <div class="skill-info">
-                    <div class="skill-icon">CSS</div>
-                    <div class="skill-name">CSS3 / Flexbox / Grid</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="90"></div>
-                </div>
-                <span class="skill-percent">90%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="frontend">
-                <div class="skill-info">
-                    <div class="skill-icon">JS</div>
-                    <div class="skill-name">JavaScript (ES6+)</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="92"></div>
-                </div>
-                <span class="skill-percent">92%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="frontend">
-                <div class="skill-info">
-                    <div class="skill-icon">React</div>
-                    <div class="skill-name">React / Next.js</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="88"></div>
-                </div>
-                <span class="skill-percent">88%</span>
-            </div>
-            <!-- Backend -->
-            <div class="skill-card glass-panel reveal" data-skill-type="backend">
-                <div class="skill-info">
-                    <div class="skill-icon">Node</div>
-                    <div class="skill-name">Node.js / Express.js</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="85"></div>
-                </div>
-                <span class="skill-percent">85%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="backend">
-                <div class="skill-info">
-                    <div class="skill-icon">Py</div>
-                    <div class="skill-name">Python / FastAPI</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="80"></div>
-                </div>
-                <span class="skill-percent">80%</span>
-            </div>
-            <!-- Database -->
-            <div class="skill-card glass-panel reveal" data-skill-type="database">
-                <div class="skill-info">
-                    <div class="skill-icon">DB</div>
-                    <div class="skill-name">MongoDB / Mongoose</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="82"></div>
-                </div>
-                <span class="skill-percent">82%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="database">
-                <div class="skill-info">
-                    <div class="skill-icon">SQL</div>
-                    <div class="skill-name">MySQL / PostgreSQL</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="78"></div>
-                </div>
-                <span class="skill-percent">78%</span>
-            </div>
-            <!-- Tools -->
-            <div class="skill-card glass-panel reveal" data-skill-type="tools">
-                <div class="skill-info">
-                    <div class="skill-icon">Git</div>
-                    <div class="skill-name">Git & GitHub Actions</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="90"></div>
-                </div>
-                <span class="skill-percent">90%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="tools">
-                <div class="skill-info">
-                    <div class="skill-icon">VS</div>
-                    <div class="skill-name">VS Code / Dev Tools</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="95"></div>
-                </div>
-                <span class="skill-percent">95%</span>
-            </div>
-            <!-- AI -->
-            <div class="skill-card glass-panel reveal" data-skill-type="ai">
-                <div class="skill-info">
-                    <div class="skill-icon">AI</div>
-                    <div class="skill-name">Gemini / OpenAI API</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="88"></div>
-                </div>
-                <span class="skill-percent">88%</span>
-            </div>
-            <div class="skill-card glass-panel reveal" data-skill-type="ai">
-                <div class="skill-info">
-                    <div class="skill-icon">Int</div>
-                    <div class="skill-name">LangChain / Agentic Tools</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" data-val="80"></div>
-                </div>
-                <span class="skill-percent">80%</span>
-            </div>
+        <div class="skills-grid" id="skills-grid">
+            <!-- Dynamic skills list loaded via JavaScript -->
         </div>
     </section>
 
