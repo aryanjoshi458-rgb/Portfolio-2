@@ -1,0 +1,165 @@
+{
+  "certs": [
+    {
+      "date": "Issued Jan 2025 • Expires Jan 2028",
+      "id": "1",
+      "link": "#",
+      "logo": "AWS",
+      "provider": "Amazon Web Services",
+      "title": "AWS Certified Solutions Architect"
+    },
+    {
+      "date": "Issued Aug 2024 • No Expiration",
+      "id": "2",
+      "link": "#",
+      "logo": "TFS",
+      "provider": "TensorFlow / Google",
+      "title": "TensorFlow Developer Certificate"
+    },
+    {
+      "date": "Issued May 2023 • No Expiration",
+      "id": "3",
+      "link": "#",
+      "logo": "MDB",
+      "provider": "MongoDB University",
+      "title": "MongoDB Certified Developer"
+    }
+  ],
+  "contact": {
+    "email": "aryanjoshi458@gmail.com",
+    "location": "Raipur, Chhattisgarh",
+    "phone": "+91 1234567891"
+  },
+  "education": [
+    {
+      "date": "2020 - 2022",
+      "desc": "Specialized in Intelligent Systems and Distributed Backend Architecture. Graduated with Honors.",
+      "id": "1",
+      "org": "State Tech University",
+      "title": "M.S. in Computer Science"
+    },
+    {
+      "date": "2016 - 2020",
+      "desc": "Acquired foundational training in Data Structures, Database Systems design, and Object-Oriented methodologies.",
+      "id": "2",
+      "org": "Tech Institute of Science",
+      "title": "B.S. in Software Engineering"
+    }
+  ],
+  "experience": [
+    {
+      "date": "2024 - Present",
+      "desc": "Designing high-throughput API services, optimizing database latency, and guiding the transition from monoliths to next-gen edge architectures.",
+      "id": "1",
+      "org": "Vortex Digital Lab",
+      "title": "Senior Full Stack Engineer"
+    },
+    {
+      "date": "2022 - 2024",
+      "desc": "Successfully built and scaled 15+ clients dashboards, increasing application load speed and UI metrics.",
+      "id": "2",
+      "org": "WebSolutions Inc.",
+      "title": "Software Developer"
+    }
+  ],
+  "pricing": {
+    "ai": {
+      "base": 5000,
+      "maxDays": 45,
+      "minDays": 25
+    },
+    "frontend": {
+      "base": 2,
+      "maxDays": 10,
+      "minDays": 5
+    },
+    "fullstack": {
+      "base": 3500,
+      "maxDays": 35,
+      "minDays": 20
+    },
+    "perFeature": 300,
+    "perPage": 80,
+    "ui": {
+      "base": 1,
+      "maxDays": 5,
+      "minDays": 2
+    }
+  },
+  "profile": {
+    "about": "I started programming over five years ago, driven by curiosity to build solutions that resolve real-world problems. Today, my focus lies at the intersection of modern front-end design systems, scalable backend architectures, and intelligent API implementations.",
+    "avatar": "/uploads/avatar_1783143113.jpg",
+    "description": "Designing and building high-performance web solutions, advanced intelligent applications, and scalable backend infrastructures for forward-thinking clients.",
+    "name": "Aryan Joshi",
+    "resume": "#",
+    "title": "Full Stack & Intelligent Agents Architect"
+  },
+  "projects": [
+    {
+      "category": "web",
+      "challenge": "",
+      "demo": "https://ravex-admin.netlify.app/login",
+      "desc": "Ravex-Tech Admin Panel is a powerful and user-friendly administrative dashboard designed to manage and monitor the Ravex-Tech e-commerce platform efficiently. The admin panel provides complete control over products, orders, customers, inventory, and website operations through a centralized interface. It is built to simplify store management while maintaining a clean, responsive, and professional user experience.",
+      "features": "Secure admin authentication and login system,Dashboard with analytics and statistics overview,Product management (Add,Edit,Delete,Update),Category and subcategory management,Order management and tracking,Customer and user management,Inventory and stock management,Search,filter,and sorting functionality,Sales reports and revenue tracking,Image upload and management system,Responsive admin interface,Notification and alert system,Settings and configuration management,Role-based access control (optional),Real-time dashboard updates (optional)",
+      "github": "https://github.com/aryanjoshi458-rgb/Ravex",
+      "id": "1783159103342",
+      "image": "/uploads/project_1783159003.jpg,/uploads/project_1783159445.jpg,/uploads/project_1783159454.jpg",
+      "metrics": "",
+      "solution": "",
+      "tech": "HTML5,CSS3,JavaScript (ES6+),React.js (if used),Tailwind CSS / Bootstrap (if used),Node.js,Express.js,MongoDB / Firebase Database,Firebase Authentication / JWT Authentication,REST APIs,Git & GitHub,Netlify / Vercel Deployment",
+      "title": "Ravex-Admin"
+    },
+    {
+      "category": "web",
+      "challenge": "",
+      "demo": "https://ravex-tech.netlify.app/",
+      "desc": "Ravex-Tech is a modern and responsive e-commerce web application designed for selling gaming peripherals and computer accessories online. The platform provides users with a seamless shopping experience, allowing them to browse, search, and purchase a wide range of products, including gaming keyboards, mice, headsets, mouse pads, and other gaming accessories. The project focuses on delivering an attractive user interface, smooth navigation, and a user-friendly shopping experience.",
+      "features": "Modern and responsive user interface,Product listing with detailed information,Search and filter functionality,Category-based product browsing,Shopping cart management system,Secure checkout interface,User authentication and account management,Product image gallery,Dark mode and attractive UI design,Mobile-friendly and cross-platform responsive layout,Wishlist and favorite products support,Admin panel for product management (optional),Fast loading performance and optimized design",
+      "github": "https://github.com/aryanjoshi458-rgb/Ravex",
+      "id": "1783158868801",
+      "image": "/uploads/project_1783158856.jpg,/uploads/project_1783158863.jpg,/uploads/project_1783159315.jpg,/uploads/project_1783159321.jpg",
+      "metrics": "",
+      "solution": "",
+      "tech": "HTML5,CSS3,JavaScript (ES6+),React.js (if used),Tailwind CSS / Bootstrap (if used),Node.js,Express.js,Firebase Authentication (if used),MongoDB / Firebase Database (if used),REST APIs,Git & GitHub,Netlify / Vercel Deployment",
+      "title": "Ravex-Tech"
+    },
+    {
+      "category": "ai",
+      "challenge": "",
+      "demo": "https://astra-ao.netlify.app/",
+      "desc": "Astra AI is a modern, full-stack AI-powered web application designed to provide an intelligent and interactive user experience through advanced conversational AI and multimedia generation capabilities. Developed independently as a solo project, Astra AI combines multiple AI technologies into a single, user-friendly platform.  The platform offers real-time AI chat assistance, AI image generation, user authentication, chat history management, and file processing features within a clean and responsive interface. Astra AI is built with a focus on performance, accessibility, and scalability, making it suitable for both personal and commercial applications.",
+      "features": "AI-powered conversational assistant, AI image generation capabilities, Secure user authentication and account management, Persistent chat history and session management, File upload and processing support, Multiple AI model integration, Responsive dark/light mode user interface, Modern dashboard and administration features, Real-time interaction and optimized performance, Scalable architecture for future enhancements,",
+      "github": "https://github.com/aryanjoshi458-rgb/Astra-AI",
+      "id": "1783155860113",
+      "image": "/uploads/project_1783155815.jpg",
+      "metrics": "",
+      "solution": "",
+      "tech": "HTML5, CSS3, JavaScript, Python Backend, Firebase Authentication, AI APIs and Model Integrations, Netlify Deployment, Modern Web Technologies and REST APIs,",
+      "title": "Astra-AI"
+    }
+  ],
+  "stats": {
+    "followers": 1200,
+    "following": 46,
+    "repos": 34,
+    "username": "aryanjoshi458-rgb"
+  },
+  "testimonials": [
+    {
+      "company": "Vortex Labs",
+      "id": "1",
+      "link": "https://linkedin.com",
+      "name": "Sarah Jenkins",
+      "review": "Aryan is an exceptional developer. He built our automated agent workflow ahead of schedule and reduced API costs by 35%. Highly recommended!",
+      "role": "Product Manager"
+    },
+    {
+      "company": "SaaSify",
+      "id": "2",
+      "link": "https://github.com",
+      "name": "David Chen",
+      "review": "Working with Aryan was seamless. His architecture is extremely clean and he explained complex system designs very clearly. A top-tier architect.",
+      "role": "Founder"
+    }
+  ]
+}

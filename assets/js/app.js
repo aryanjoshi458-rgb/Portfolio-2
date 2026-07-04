@@ -530,13 +530,25 @@ function initDynamicContent() {
             }
             applyData();
         })
-        .catch(err => {
-            console.warn('Flask server API not available. Loading from localStorage fallback.', err);
-            const stored = localStorage.getItem('AryanJoshiPortfolioData');
-            if (stored) {
-                portfolioData = JSON.parse(stored);
-            }
-            applyData();
+        .catch(() => {
+            // Flask not available — try static data/portfolio.json (works on Netlify)
+            fetch('data/portfolio.json')
+                .then(res => {
+                    if (!res.ok) throw new Error('Static JSON not found');
+                    return res.json();
+                })
+                .then(data => {
+                    portfolioData = data;
+                    applyData();
+                })
+                .catch(() => {
+                    // Final fallback: localStorage or hardcoded defaults
+                    const stored = localStorage.getItem('AryanJoshiPortfolioData');
+                    if (stored) {
+                        try { portfolioData = JSON.parse(stored); } catch(e) {}
+                    }
+                    applyData();
+                });
         });
 }
 
