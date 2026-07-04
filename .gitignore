@@ -17,9 +17,10 @@ portfolio.db
 *.sqlite
 *.sqlite3
 
-# Uploaded files (keep folder, ignore contents)
-uploads/*
-!uploads/.gitkeep
+# Uploaded files — commit these for Netlify static hosting
+# uploads/*
+# !uploads/.gitkeep
+
 
 # OS Files
 .DS_Store
