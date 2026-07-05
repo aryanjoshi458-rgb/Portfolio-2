@@ -190,24 +190,32 @@ def allowed_file(filename):
 # API Routes
 @app.route('/api/portfolio', methods=['GET'])
 def get_portfolio():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute('SELECT data FROM portfolio_settings WHERE id = 1')
-    row = cursor.fetchone()
-    conn.close()
-    if row:
-        return jsonify(json.loads(row['data']))
-    return jsonify({"error": "No data found"}), 404
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute('SELECT data FROM portfolio_settings WHERE id = 1')
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return jsonify(json.loads(row['data']))
+        return jsonify({"error": "No data found in database"}), 404
+    except Exception as e:
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/api/portfolio', methods=['POST'])
 def save_portfolio():
-    conn = get_db()
-    cursor = conn.cursor()
-    new_data = request.json
-    cursor.execute('UPDATE portfolio_settings SET data = ? WHERE id = 1', (json.dumps(new_data),))
-    conn.commit()
-    conn.close()
-    return jsonify({"success": True, "message": "Portfolio updated successfully"})
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        new_data = request.json
+        cursor.execute('UPDATE portfolio_settings SET data = ? WHERE id = 1', (json.dumps(new_data),))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True, "message": "Portfolio updated successfully"})
+    except Exception as e:
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
