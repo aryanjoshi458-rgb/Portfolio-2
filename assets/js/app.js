@@ -4,7 +4,7 @@ let portfolioData = {};
 // Dynamic API Base URL depending on environment
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://127.0.0.1:5000'
-    : 'https://portfolio-backend-render-app.onrender.com'; // You will replace this with your actual Render URL
+    : 'https://port-foliox.onrender.com'; // Deployed Render URL
 
 
 document.addEventListener('DOMContentLoaded', () => {
