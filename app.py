@@ -265,7 +265,14 @@ def delete_message(msg_id):
 @app.route('/api/visit', methods=['POST'])
 def log_visit():
     import hashlib
+    # Get remote client IP from headers, handling proxy hops
     ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1')
+    # If multiple proxies exist, take the first one (real client)
+    if ',' in ip:
+        ip = ip.split(',')[0].strip()
+    else:
+        ip = ip.strip()
+        
     ip_hash = hashlib.sha256(ip.encode('utf-8')).hexdigest()
     
     conn = get_db()

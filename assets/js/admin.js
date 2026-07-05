@@ -1,5 +1,11 @@
 // Custom Confirm Dialog Logic
 let activeConfirmCallback = null;
+
+// Dynamic API Base URL depending on environment
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://127.0.0.1:5000'
+    : 'https://portfolio-backend-render-app.onrender.com'; // You will replace this with your actual Render URL
+
 window.showConfirm = function (message, onConfirm) {
     document.getElementById('confirm-modal-message').textContent = message;
     activeConfirmCallback = onConfirm;
@@ -144,7 +150,7 @@ tabs.forEach(tab => {
 
 // Fetch server statistics for the Overview tab
 function fetchStats() {
-    fetch('http://127.0.0.1:5000/api/stats')
+    fetch(`${API_BASE_URL}/api/stats`)
         .then(res => res.json())
         .then(data => {
             const visitorsEl = document.getElementById('stat-unique-visitors');
@@ -449,7 +455,7 @@ function loadSettings() {
         applyFormValues();
     };
 
-    fetch('http://127.0.0.1:5000/api/portfolio')
+    fetch(`${API_BASE_URL}/api/portfolio`)
         .then(res => {
             if (!res.ok) throw new Error('API server load error');
             return res.json();
@@ -466,7 +472,7 @@ function loadSettings() {
                         console.log("Migrating local data to Flask database...");
                         portfolioData = localObj;
                         // Save back to backend immediately
-                        fetch('http://127.0.0.1:5000/api/portfolio', {
+                        fetch(`${API_BASE_URL}/api/portfolio`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(portfolioData)
@@ -557,7 +563,7 @@ btnCropSave.addEventListener('click', () => {
         canvas.toBlob(blob => {
             const formData = new FormData();
             formData.append('file', blob, activeCropTarget === 'avatar' ? 'avatar.jpg' : 'project.jpg');
-            fetch('http://127.0.0.1:5000/api/upload', {
+            fetch(`${API_BASE_URL}/api/upload`, {
                 method: 'POST',
                 body: formData
             })
@@ -703,7 +709,7 @@ document.getElementById('profile-resume-file').addEventListener('change', functi
         statusSpan.textContent = 'Uploading...';
         statusSpan.style.color = 'var(--accent-primary)';
 
-        fetch('http://127.0.0.1:5000/api/upload', {
+        fetch(`${API_BASE_URL}/api/upload`, {
             method: 'POST',
             body: formData
         })
@@ -812,7 +818,7 @@ window.deleteCert = function (id) {
         renderCertsList();
         // Save state instantly to database & localStorage
         localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
-        fetch('http://127.0.0.1:5000/api/portfolio', {
+        fetch(`${API_BASE_URL}/api/portfolio`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(portfolioData)
@@ -956,7 +962,7 @@ window.deleteResumeItem = function (type, id) {
         }
         // Save state instantly to database & localStorage
         localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
-        fetch('http://127.0.0.1:5000/api/portfolio', {
+        fetch(`${API_BASE_URL}/api/portfolio`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(portfolioData)
@@ -1072,7 +1078,7 @@ window.deleteTestimonial = function (id) {
         renderTestimonialsList();
         // Save state instantly to database & localStorage
         localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
-        fetch('http://127.0.0.1:5000/api/portfolio', {
+        fetch(`${API_BASE_URL}/api/portfolio`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(portfolioData)
@@ -1302,7 +1308,7 @@ window.deleteProject = function (id) {
         renderProjectsList();
         // Save state instantly to prevent resurrection on refresh
         localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
-        fetch('http://127.0.0.1:5000/api/portfolio', {
+        fetch(`${API_BASE_URL}/api/portfolio`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(portfolioData)
@@ -1371,7 +1377,7 @@ document.getElementById('btn-save-project').addEventListener('click', () => {
 
     // Save state instantly to database & localStorage to prevent loss on refresh
     localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
-    fetch('http://127.0.0.1:5000/api/portfolio', {
+    fetch(`${API_BASE_URL}/api/portfolio`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(portfolioData)
@@ -1399,7 +1405,7 @@ document.getElementById('btn-global-save').addEventListener('click', () => {
     localStorage.setItem('AryanJoshiPortfolioData', JSON.stringify(portfolioData));
 
     // Save to Database via Flask API
-    fetch('http://127.0.0.1:5000/api/portfolio', {
+    fetch(`${API_BASE_URL}/api/portfolio`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -1516,7 +1522,7 @@ window.loadMessages = function () {
     if (!container) return;
     container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px;">Loading messages...</div>';
 
-    fetch('http://127.0.0.1:5000/api/messages')
+    fetch(`${API_BASE_URL}/api/messages`)
         .then(res => {
             if (!res.ok) throw new Error('Failed to load messages');
             return res.json();
@@ -1563,7 +1569,7 @@ window.loadMessages = function () {
 
 window.deleteMessage = function (id) {
     showConfirm('Are you sure you want to delete this message?', () => {
-        fetch(`http://127.0.0.1:5000/api/messages/${id}`, {
+        fetch(`${API_BASE_URL}/api/messages/${id}`, {
             method: 'DELETE'
         })
             .then(res => {
@@ -1577,7 +1583,7 @@ window.deleteMessage = function (id) {
 };
 
 function checkMessagesBadge() {
-    fetch('http://127.0.0.1:5000/api/messages')
+    fetch(`${API_BASE_URL}/api/messages`)
         .then(res => res.json())
         .then(data => {
             const badge = document.getElementById('messages-badge');

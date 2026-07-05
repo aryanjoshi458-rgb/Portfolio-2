@@ -1,6 +1,12 @@
 // Global portfolio data store — accessible from all functions
 let portfolioData = {};
 
+// Dynamic API Base URL depending on environment
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://127.0.0.1:5000'
+    : 'https://portfolio-backend-render-app.onrender.com'; // You will replace this with your actual Render URL
+
+
 document.addEventListener('DOMContentLoaded', () => {
     initDynamicContent();
     initTheme();
@@ -18,10 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Log unique visitor counts to database
 function initVisitorLogger() {
-    fetch('http://127.0.0.1:5000/api/visit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-    }).catch(err => console.log("Visitor logging skipped locally:", err));
+    // Only count unique users once using a persistent local flag
+    if (!localStorage.getItem('portfolio_has_visited')) {
+        fetch(`${API_BASE_URL}/api/visit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => {
+            if (res.ok) {
+                localStorage.setItem('portfolio_has_visited', 'true');
+            }
+        })
+        .catch(err => console.log("Visitor logging skipped locally:", err));
+    }
 }
 
 
@@ -574,7 +589,7 @@ function initDynamicContent() {
     }
 
     // Try fetching from database first
-    fetch('http://127.0.0.1:5000/api/portfolio')
+    fetch(`${API_BASE_URL}/api/portfolio`)
         .then(res => {
             if (!res.ok) throw new Error('Backend server response was not OK');
             return res.json();
@@ -591,7 +606,7 @@ function initDynamicContent() {
                         console.log("Migrating local data to Flask database...");
                         portfolioData = localObj;
                         // Save back to backend immediately
-                        fetch('http://127.0.0.1:5000/api/portfolio', {
+                        fetch(`${API_BASE_URL}/api/portfolio`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(portfolioData)
@@ -930,7 +945,7 @@ function initContactForm() {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending Message...';
 
-        fetch('http://127.0.0.1:5000/api/messages', {
+        fetch(`${API_BASE_URL}/api/messages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
