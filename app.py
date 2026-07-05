@@ -98,10 +98,23 @@ def init_db():
                 "following": 84
             },
             "contact": {
-                "email": "Aryan.Joshi.dev@gmail.com",
-                "phone": "+1 (555) 019-2834",
-                "location": "San Francisco, CA"
+                "email": "aryanjoshi458@gmail.com",
+                "phone": "+91 9999999999",
+                "location": "Mumbai, India"
             },
+            "skills": [
+                { "id": "1", "name": "HTML5 / CSS3", "percent": 95, "category": "frontend" },
+                { "id": "2", "name": "JavaScript (ES6+)", "percent": 92, "category": "frontend" },
+                { "id": "3", "name": "React / Next.js", "percent": 88, "category": "frontend" },
+                { "id": "4", "name": "Node.js / Express.js", "percent": 85, "category": "backend" },
+                { "id": "5", "name": "Python / FastAPI", "percent": 80, "category": "backend" },
+                { "id": "6", "name": "MongoDB", "percent": 82, "category": "backend" },
+                { "id": "7", "name": "PostgreSQL / MySQL", "percent": 85, "category": "backend" },
+                { "id": "8", "name": "Git & GitHub Workflow", "percent": 90, "category": "tools" },
+                { "id": "9", "name": "Docker Containers", "percent": 75, "category": "tools" },
+                { "id": "10", "name": "AWS Cloud Services", "percent": 78, "category": "tools" },
+                { "id": "11", "name": "OpenAI / Gemini API Integration", "percent": 85, "category": "ai" }
+            ],
             "projects": [
                 {
                     "id": "1",
@@ -167,6 +180,9 @@ def init_db():
         cursor.execute('INSERT INTO portfolio_settings (id, data) VALUES (1, ?)', (json.dumps(default_data),))
         conn.commit()
     conn.close()
+
+# Auto-initialize database on startup (needed for production WSGI servers like Gunicorn)
+init_db()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
