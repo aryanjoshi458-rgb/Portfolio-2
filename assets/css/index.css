@@ -1713,19 +1713,19 @@ section {
 footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--glass-border);
-    padding: 60px 4% 30px;
+    padding: 25px 4% 15px;
 }
 
 .footer-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
+    gap: 30px;
+    margin-bottom: 15px;
 }
 
 .footer-brand h3 {
     font-size: 1.5rem;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .footer-brand p {
@@ -1735,14 +1735,14 @@ footer {
 
 .footer-links h4 {
     font-size: 1.1rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .footer-links ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 .footer-links a {
@@ -1780,7 +1780,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid var(--glass-border);
-    padding-top: 30px;
+    padding-top: 12px;
     font-size: 0.85rem;
     color: var(--text-muted);
     flex-wrap: wrap;

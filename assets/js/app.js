@@ -777,18 +777,17 @@ function initSkillsFilter() {
         animateProgressBar(card.querySelector('.progress-bar'));
     });
 
+    // Directly bind clicks safely, preventing duplicates
     tabs.forEach(tab => {
-        // Prevent duplicate listener accumulation
-        tab.replaceWith(tab.cloneNode(true));
-    });
+        // Remove existing listeners by cloning and replacing
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+        
+        newTab.addEventListener('click', () => {
+            document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+            newTab.classList.add('active');
 
-    const freshTabs = document.querySelectorAll('.skill-tab');
-    freshTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            freshTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            const category = tab.getAttribute('data-skill-cat');
+            const category = newTab.getAttribute('data-skill-cat');
             const cards = document.querySelectorAll('.skill-card');
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-skill-type') === category) {

@@ -6,7 +6,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='.')
-CORS(app)  # Enable CORS for local development
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Enable CORS for all origins in production
 
 DB_FILE = 'portfolio.db'
 UPLOAD_FOLDER = 'uploads'
